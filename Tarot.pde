@@ -50,7 +50,7 @@ void setup() {
   pg = createGraphics(width, height);
   px = width/4; py = height/4;
   img = loadImage("head.jpg");
-  //drawFibonnaci();
+  drawFibonnaci();
   
   // Draw Initial Card
   constructCard();
@@ -62,8 +62,15 @@ void draw() {
   }
   constructCard();
   blendMode(MULTIPLY);
-  image(img, 55, 50);
+  image(pg, 0, 0);
+  /*
+  pushMatrix();
+  translate(width, height);
+  rotate(PI);
+  image(img, 60, 60);
+  popMatrix(); 
   blendMode(NORMAL);
+  */
 }
 
 void drawFibonnaci() {
