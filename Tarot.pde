@@ -29,7 +29,7 @@ int X_AXIS = 2;
 int frameWidth = 20;
 PFont f;
 
-// Setup the Artboard
+/* Setup the Artboard */
 void setup() {
 
   // Set up Canvas
@@ -46,21 +46,31 @@ void setup() {
   randomSeed(seed);
   
   // Chose Fortune
-  fortune = majorArcana[ round(random(0, majorArcana.length - 1)) ];
+  generateFortune();
   crazy = fortune.equals("Wheel of Fortune");
     
   // Draw Initial Card
-  imgNum = round(random(1,6));
-  newPalette();
   constructCard();
 }
 
 void draw() {
   if(crazy) {
      newPalette(); // Create crazy colors on "Wheel of Fortune" card
-     imgNum = round(random(1,6));
   }
   constructCard();
+}
+
+/* Draw new fortune on ENTER Key */
+void keyPressed() {
+  if (key == ENTER) {
+    generateFortune();
+  }
+}
+
+void generateFortune() {
+   newPalette();
+   fortune = majorArcana[ round(random(0, majorArcana.length - 1)) ];
+   imgNum = round(random(1,5));
 }
 
 void newPalette() {
