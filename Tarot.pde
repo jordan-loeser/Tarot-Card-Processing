@@ -9,7 +9,7 @@ Minim minim;
 AudioInput in;
 
 /* Define Cards */
-String[] majorArcana = {"The Fool", "The Magician", "The High Priestess", "The Empress", "The Emperor", "The Hierophant", "The Lovers", "The Chariot", "Strength", "The Hermit", "Wheel of Fortune", "Justice", "The Hanged Man", "Death", "Temperance", "The Devil", "The Tower", "The Star", "The Moon", "The Sun", "Judgement", "The World"};
+String[] majorArcana = {"The Fool", "The Magician", "The High Priestess", "The Empress", "The Emperor", "The Hierophant", "The Lovers", "The Chariot", "Strength", "The Hermit", "Wheel of Fortune", "Justice", "The Hanged Man", "Death", "The Devil", "Temperance", "The Tower", "The Star", "The Moon", "The Sun", "Judgement", "The World"};
 String fortune;
 boolean crazy = false;
 
@@ -22,6 +22,8 @@ color[] palette;
 color c1, c2, c3;
 
 /* Initialize Variables */
+PImage img;
+int imgNum;
 int Y_AXIS = 1;
 int X_AXIS = 2;
 int frameWidth = 20;
@@ -39,60 +41,26 @@ void setup() {
   minim = new Minim(this);
   in = minim.getLineIn();
   delay(100);
-  randomSeed(round(in.left.get(0)*100));
+  int seed = round((in.left.get(100)+in.right.get(100)*100)*100);
+  println("Random Seed: " + seed);
+  randomSeed(seed);
   
   // Chose Fortune
   fortune = majorArcana[ round(random(0, majorArcana.length - 1)) ];
   crazy = fortune.equals("Wheel of Fortune");
-  
-  // Image Initialize
-  newPalette();
-  pg = createGraphics(width, height);
-  px = width/4; py = height/4;
-  img = loadImage("head.jpg");
-  drawFibonnaci();
-  
+    
   // Draw Initial Card
+  imgNum = round(random(1,6));
+  newPalette();
   constructCard();
 }
 
 void draw() {
   if(crazy) {
      newPalette(); // Create crazy colors on "Wheel of Fortune" card
+     imgNum = round(random(1,6));
   }
   constructCard();
-  blendMode(MULTIPLY);
-  image(pg, 0, 0);
-  /*
-  pushMatrix();
-  translate(width, height);
-  rotate(PI);
-  image(img, 60, 60);
-  popMatrix(); 
-  blendMode(NORMAL);
-  */
-}
-
-void drawFibonnaci() {
-    pg.beginDraw();
-    pg.blendMode(NORMAL);
-    pg.stroke(c2);
-    int i = 3000;
-    fibDone = false;
-    while(!fibDone && i > 0){ // for more speed
-      degree = (iter * goldenRatio) * 360;
-      r = sqrt(iter++) * spacing;
-      calcPointPos(width/2, height/2, r, (degree % 360));
-  
-      color pix = img.get((int)px, (int)py);
-      currWeight = map(brightness(pix), 255, 0, minWeight, maxWeight);
-      pg.strokeWeight(currWeight);
-      pg.point(px, py);
-      if (abs(px-(width/2)) > (width/2) - 10 || px+10<= 0 || px+10 >= width || py-10 <= 0 || py+10 >= height ) { fibDone = true; }
-      --i;
-    }
-    pg.endDraw();
-    blendMode(NORMAL);
 }
 
 void newPalette() {
@@ -106,6 +74,7 @@ void newPalette() {
 void constructCard() {
   createBackground();
   addTarot(fortune);
+  addGraphic();
   drawCircularSoundwave();
   addFrame(frameWidth);
 }
@@ -139,6 +108,18 @@ void addTarot(String fortune) {
   rotate(-1 * HALF_PI);
   text(fortune.toUpperCase(),0,0);
   popMatrix(); 
+}
+
+void addGraphic() {
+  blendMode(MULTIPLY);
+  img = loadImage(imgNum + ".jpg");
+  image(img, 70, 70);
+  pushMatrix();
+  translate(width, height);
+  rotate(PI);
+  image(img, 70, 70);
+  popMatrix(); 
+  blendMode(NORMAL);
 }
 
 void addFrame(int thickness) {
