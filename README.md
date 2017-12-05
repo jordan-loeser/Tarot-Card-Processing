@@ -13,3 +13,5 @@ Utilizing a random seed calibrated by ambient noise input.
 ![Card1](https://github.com/Jordan-Loeser/Tarot-Card-Processing/blob/master/examples/card1.gif) |  ![Card2](https://github.com/Jordan-Loeser/Tarot-Card-Processing/blob/master/examples/card2.gif)
 :-------------------------:|:-------------------------:
 Card 1             |  Card 2
+
+In interactive output, sound waves represent real-time sound input.
