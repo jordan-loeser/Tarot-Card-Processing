@@ -63,6 +63,7 @@ void draw() {
 /* Draw new fortune on ENTER Key */
 void keyPressed() {
   if (key == ENTER) {
+    crazy = false;
     generateFortune();
   }
 }
@@ -70,7 +71,7 @@ void keyPressed() {
 void generateFortune() {
    newPalette();
    fortune = majorArcana[ round(random(0, majorArcana.length - 1)) ];
-   imgNum = round(random(1,5));
+   imgNum = round(random(1,6));
 }
 
 void newPalette() {
